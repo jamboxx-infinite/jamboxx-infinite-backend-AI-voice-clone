@@ -10,8 +10,10 @@ from app.routers import router
 logger = logging.getLogger(__name__)
 
 def verify_ffmpeg():
-    ffmpeg_path = r"C:\ffmpeg\bin\ffmpeg.exe"
-    ffprobe_path = r"C:\ffmpeg\bin\ffprobe.exe"
+    # Get the directory where the executable/script is located
+    base_dir = Path(os.path.dirname(os.path.abspath(__file__))).parent
+    ffmpeg_path = str(base_dir / "ffmpeg")
+    ffprobe_path = str(base_dir / "ffmpeg")
     
     try:
         # 验证文件存在
@@ -46,7 +48,8 @@ app.add_middleware(
 )
 
 # 创建静态文件目录
-static_dir = Path("d:/CS/System Engineering/Jamboxx_infinite_backends/static")
+base_dir = Path(os.path.dirname(os.path.abspath(__file__))).parent
+static_dir = os.path.join(str(base_dir), "static")
 os.makedirs(static_dir, exist_ok=True)
 
 # 挂载静态文件服务
