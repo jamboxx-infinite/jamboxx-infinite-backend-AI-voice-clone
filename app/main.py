@@ -6,14 +6,16 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 from pathlib import Path
 from app.routers import router
+import sys
 
 logger = logging.getLogger(__name__)
 
 def verify_ffmpeg():
     # Get the directory where the executable/script is located
-    base_dir = Path(os.path.dirname(os.path.abspath(__file__))).parent
-    ffmpeg_path = str(base_dir / "ffmpeg")
-    ffprobe_path = str(base_dir / "ffmpeg")
+    base_dir = Path(get_app_path())
+    print(base_dir)
+    ffmpeg_path = str(base_dir / "ffmpeg" / "bin" / "ffmpeg.exe")
+    ffprobe_path = str(base_dir / "ffmpeg" / "bin" / "ffprobe.exe")
     
     try:
         # 验证文件存在
@@ -36,6 +38,15 @@ def verify_ffmpeg():
         logger.error(f"FFmpeg verification failed: {str(e)}")
         return False
 
+def get_app_path():
+    """获取应用程序的根路径，兼容开发环境和编译后环境"""
+    if getattr(sys, 'frozen', False):
+        # 如果是编译后的环境
+        return os.path.dirname(sys.executable)
+    else:
+        # 开发环境
+        return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 app = FastAPI(title="Jamboxx Infinite Backends")
 
 # CORS设置
@@ -48,8 +59,7 @@ app.add_middleware(
 )
 
 # 创建静态文件目录
-base_dir = Path(os.path.dirname(os.path.abspath(__file__))).parent
-static_dir = os.path.join(str(base_dir), "static")
+static_dir = os.path.join(get_app_path(), "static")
 os.makedirs(static_dir, exist_ok=True)
 
 # 挂载静态文件服务
