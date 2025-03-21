@@ -27,6 +27,14 @@ class VoiceConvertConfig(BaseModel):
     f0_max: int = 1100
     threhold: int = -60
     enhancer_adaptive_key: int = 0
+    
+class ChatRequest(BaseModel):
+    prompt: str
+
+@router.post("/chat/llama")
+async def chat_llama(request: ChatRequest):
+    return StreamingResponse(run_llama_stream(request.prompt, max_tokens=200), media_type="application/json")
+
 
 @router.post("/voice/convert")
 async def convert_voice(
