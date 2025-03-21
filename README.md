@@ -1,8 +1,9 @@
 ﻿# Jamboxx Infinite Backends
 
-A FastAPI-based backend service for DDSP-SVC voice conversion and audio processing.
+#### Voice cloning - a FastAPI-based backend service for DDSP-SVC voice conversion and audio processing.
+#### Offline chatbot - this project provides a lightweight FastAPI wrapper around a [llama.cpp](https://github.com/ggerganov/llama.cpp)-based large language model (LLM) binary, enabling real-time streamed AI chat completions via HTTP.
 
-## Features
+## Features - voice cloning
 
 - Real-time voice conversion using DDSP-SVC
 - Multiple speaker support
@@ -11,8 +12,17 @@ A FastAPI-based backend service for DDSP-SVC voice conversion and audio processi
 - Async processing
 - Docker support
 - Comprehensive error handling
+  
+## Features - offline chatbot
 
-## Requirements
+- Simple REST API with `/chat/` endpoint for prompt-based inference
+- Streaming JSON responses using `StreamingResponse` for fast output delivery
+- Validates input with Pydantic
+- Built-in support for instruction-tuned Mistral 7B model (`mistral-7b-instruct-v0.2.Q4_K_M.gguf`)
+- Customizable token count and context size
+- Clean subprocess-based execution using `asyncio` for maximum performance
+
+## Requirements - voice cloning 
 
 - Windows 10/11 (64-bit)
 - Visual C++ Redistributable 2019 or later
@@ -20,7 +30,16 @@ A FastAPI-based backend service for DDSP-SVC voice conversion and audio processi
 - FFmpeg
 - Anaconda or Miniconda
 
-## Installation
+## Requirements - offline chatbot
+
+- Python 3.8+
+- llama.cpp (compiled binary)
+- Mistral 7B model in `.gguf` format
+- FastAPI
+- Uvicorn
+
+
+## Installation - voice cloning
 
 ### Method 1: Using Pre-compiled Executable (Windows Only)
 
@@ -62,7 +81,38 @@ cp .env.example .env
 python scripts/download_models.py
 ```
 
-## Usage
+## Installation - offline chatbot
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/llama-fastapi-backend.git
+cd llama-fastapi-backend
+```
+
+2. Build `llama.cpp` binary (assumes it's located at `build/bin/llama-cli`):
+
+```bash
+# Inside the llama.cpp directory
+mkdir -p build && cd build
+cmake ..
+make -j
+```
+
+3. Download your model (`.gguf` format) into `models/` directory:
+
+```bash
+mkdir -p models
+# Move your .gguf model file into the models/ directory
+```
+
+4. Run the API server:
+
+```bash
+python app.py
+```
+
+## Usage - voice cloning
 
 ### Running the Server
 
@@ -131,6 +181,26 @@ GET /api/v1/models
 POST /api/v1/updateModel
 ```
 
+## Usage - offline chatbot
+
+Send a POST request to `http://127.0.0.1:8000/chat/` with the following JSON body:
+
+```json
+{
+  "prompt": "Explain what a black hole is."
+}
+```
+
+Response will stream the model's output in real-time as JSON content.
+
+Example using `curl`:
+
+```bash
+curl -X POST http://127.0.0.1:8000/chat/ \
+     -H "Content-Type: application/json" \
+     -d '{"prompt": "Tell me a story about a dragon."}'
+```
+
 ## Development
 
 ### Project Structure
@@ -154,7 +224,7 @@ jamboxx_infinite_backends/
 └── README.md
 ```
 
-## Building Notes
+## Building Notes - voice cloning
 
 - Python 3.10.12 is recommended for optimal compatibility
 - Compilation requires approximately 2GB of disk space
@@ -163,11 +233,24 @@ jamboxx_infinite_backends/
 - Target system must have Visual C++ Redistributable 2019 or later installed
 - CUDA 11.8 is recommended for GPU acceleration
 
+## Building Notes - offline chatbot
+
+Ensure the following:
+
+- You’ve compiled `llama.cpp` using `cmake` and `make`
+- The binary is available at `build/bin/llama-cli`
+- The model is in `.gguf` format and placed in `models/` directory
+- Environment variable `DYLD_LIBRARY_PATH` is set (especially on macOS)
+
+
 ## Acknowledgments
 
 - DDSP-SVC project
 - FastAPI framework
 - PyTorch community
-
+- [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) 
+- [Mistral AI](https://mistral.ai/)
+- 
 ## Contributor
 WesleyXu - wesley.xu.23@ucl.ac.uk
+Joyce Kong - hui.kong.23@ucl.ac.uk
