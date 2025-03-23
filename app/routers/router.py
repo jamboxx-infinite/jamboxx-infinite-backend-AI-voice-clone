@@ -1,6 +1,6 @@
 import json
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 import os
 import uuid
 import numpy as np
@@ -9,6 +9,7 @@ from pydantic import BaseModel
 import tempfile
 from app.services.ddsp_service import DDSPService
 from ..services.separator_service import AudioSeparatorService
+from ..services.chatbot_services import run_llama_stream
 import logging
 from typing import Optional, Dict
 
