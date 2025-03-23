@@ -32,3 +32,6 @@ env/
 
 # models
 *.pt
+
+# cache
+*.npy
