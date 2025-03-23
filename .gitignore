@@ -38,4 +38,5 @@ env/
 *.mp3
 *.flac
 
+# cache
 *.npy

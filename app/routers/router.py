@@ -1,6 +1,6 @@
 import json
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 import os
 import uuid
 import numpy as np
@@ -11,6 +11,7 @@ import aiofiles  # 添加这行
 import io  # 添加这行
 from app.services.ddsp_service import DDSPService
 from ..services.separator_service import AudioSeparatorService
+from ..services.chatbot_services import run_llama_stream
 import logging
 from typing import Optional, Dict
 
@@ -29,6 +30,14 @@ class VoiceConvertConfig(BaseModel):
     f0_max: int = 1100
     threhold: int = -60
     enhancer_adaptive_key: int = 0
+    
+class ChatRequest(BaseModel):
+    prompt: str
+
+@router.post("/chat/llama")
+async def chat_llama(request: ChatRequest):
+    return StreamingResponse(run_llama_stream(request.prompt, max_tokens=200), media_type="application/json")
+
 
 @router.post("/voice/convert")
 async def convert_voice(
