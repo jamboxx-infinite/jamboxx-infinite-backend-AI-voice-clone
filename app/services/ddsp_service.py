@@ -22,22 +22,26 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 class DDSPService:
-    def __init__(self, model_path=None, device=None):
+    def __init__(self, model_name=None, device=None):
         # Initialize service
         if device is None:
             self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         else:
             self.device = device
-            
+        
         # set base directory
         self.base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
         
         os.environ['RMVPE_MODEL_PATH'] = os.path.join(self.base_dir, 'pretrain', 'rmvpe', 'model.pt')
         
         # Set default model path
-        if model_path is None:
+        if model_name is None or model_name == 'Child':
             # Use os.path.join for cross-platform compatibility
             model_path = os.path.join(self.base_dir,'pretrain', 'ddsp', 'Neuro_22000.pt')
+        if model_name == 'Male':
+            model_path = os.path.join(self.base_dir,'pretrain', 'ddsp', 'Male.pt')
+        if model_name == 'Female':
+            model_path = os.path.join(self.base_dir,'pretrain', 'ddsp', 'Female.pt')
             
         # Ensure model file exists
         if not os.path.exists(model_path):
