@@ -186,14 +186,14 @@ async def get_speakers():
 
 @router.post("/model/load")
 async def load_model(
-    model_path: str = Form(...),
+    model_name: str = Form(...),
 ):
     """
     Load/switch models
-    :param model_path: Model path
+    :param model_name: Model name
     """
     try:
-        ddsp_service.__init__(model_path)
+        ddsp_service.__init__(model_name)
         return JSONResponse(content={"message": "Model loaded successfully"})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
