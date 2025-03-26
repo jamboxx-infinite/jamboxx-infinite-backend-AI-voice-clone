@@ -1,8 +1,9 @@
 ﻿# Jamboxx Infinite Backends
 
-A FastAPI-based backend service for DDSP-SVC voice conversion and audio processing.
+#### Voice cloning - a FastAPI-based backend service for DDSP-SVC voice conversion and audio processing.
+#### Offline chatbot - this project provides a lightweight FastAPI wrapper around a [llama.cpp](https://github.com/ggerganov/llama.cpp)-based large language model (LLM) binary, enabling real-time streamed AI chat completions via HTTP.
 
-## Features
+## Features - voice cloning
 
 - Real-time voice conversion using DDSP-SVC
 - Multiple speaker support
@@ -11,8 +12,17 @@ A FastAPI-based backend service for DDSP-SVC voice conversion and audio processi
 - Async processing
 - Docker support
 - Comprehensive error handling
+  
+## Features - offline chatbot
 
-## Requirements
+- Simple REST API with `/chat/` endpoint for prompt-based inference
+- Streaming JSON responses using `StreamingResponse` for fast output delivery
+- Validates input with Pydantic
+- Built-in support for instruction-tuned Mistral 7B model (`mistral-7b-instruct-v0.2.Q4_K_M.gguf`)
+- Customizable token count and context size
+- Clean subprocess-based execution using `asyncio` for maximum performance
+
+## Requirements - voice cloning 
 
 - Windows 10/11 (64-bit)
 - Visual C++ Redistributable 2019 or later
@@ -20,7 +30,16 @@ A FastAPI-based backend service for DDSP-SVC voice conversion and audio processi
 - FFmpeg
 - Anaconda or Miniconda
 
-## Installation
+## Requirements - offline chatbot
+
+- Python 3.8+
+- llama.cpp (compiled binary)
+- Mistral 7B model in `.gguf` format
+- FastAPI
+- Uvicorn
+
+
+## Installation - voice cloning
 
 ### Method 1: Using Pre-compiled Executable (Windows Only)
 
@@ -62,7 +81,38 @@ cp .env.example .env
 python scripts/download_models.py
 ```
 
-## Usage
+## Installation - offline chatbot
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/llama-fastapi-backend.git
+cd llama-fastapi-backend
+```
+
+2. Build `llama.cpp` binary (assumes it's located at `build/bin/llama-cli`):
+
+```bash
+# Inside the llama.cpp directory
+mkdir -p build && cd build
+cmake ..
+make -j
+```
+
+3. Download your model (`.gguf` format) into `models/` directory:
+
+```bash
+mkdir -p models
+# Move your .gguf model file into the models/ directory
+```
+
+4. Run the API server:
+
+```bash
+python app.py
+```
+
+## Usage - voice cloning
 
 ### Running the Server
 
@@ -131,6 +181,26 @@ GET /api/v1/models
 POST /api/v1/updateModel
 ```
 
+## Usage - offline chatbot
+
+Send a POST request to `http://127.0.0.1:8000/chat/` with the following JSON body:
+
+```json
+{
+  "prompt": "Explain what a black hole is."
+}
+```
+
+Response will stream the model's output in real-time as JSON content.
+
+Example using `curl`:
+
+```bash
+curl -X POST http://127.0.0.1:8000/chat/ \
+     -H "Content-Type: application/json" \
+     -d '{"prompt": "Tell me a story about a dragon."}'
+```
+
 ## Development
 
 ### Project Structure
@@ -154,7 +224,7 @@ jamboxx_infinite_backends/
 └── README.md
 ```
 
-## Building Notes
+## Building Notes - voice cloning
 
 - Python 3.10.12 is recommended for optimal compatibility
 - Compilation requires approximately 2GB of disk space
@@ -163,151 +233,24 @@ jamboxx_infinite_backends/
 - Target system must have Visual C++ Redistributable 2019 or later installed
 - CUDA 11.8 is recommended for GPU acceleration
 
+## Building Notes - offline chatbot
+
+Ensure the following:
+
+- You’ve compiled `llama.cpp` using `cmake` and `make`
+- The binary is available at `build/bin/llama-cli`
+- The model is in `.gguf` format and placed in `models/` directory
+- Environment variable `DYLD_LIBRARY_PATH` is set (especially on macOS)
+
+
 ## Acknowledgments
 
 - DDSP-SVC project
 - FastAPI framework
 - PyTorch community
-
+- [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) 
+- [Mistral AI](https://mistral.ai/)
+- 
 ## Contributor
 WesleyXu - wesley.xu.23@ucl.ac.uk
-
-# Jamboxx Infinite Backends API Documentation
-
-## Overview
-RESTful API for AI-powered voice conversion and audio processing services.
-
-## Endpoints
-
-### Voice Conversion
-
-#### `POST /voice/convert`
-Convert voice using DDSP-SVC model.
-
-**Parameters:**
-- `file`: Audio file (required)
-- `speaker_id`: Target speaker ID (default: 1)
-- `key`: Pitch adjustment in semitones (default: 0)
-- `enhance`: Enable audio enhancement (default: true)
-- `pitch_extractor`: Algorithm for pitch extraction (default: "rmvpe")
-- `f0_min`: Minimum pitch in Hz (default: 50)
-- `f0_max`: Maximum pitch in Hz (default: 1100)
-- `threhold`: Volume threshold in dB (default: -60)
-- `enhancer_adaptive_key`: Enhancer key adaptation value (default: 0)
-
-**Response:**
-```json
-{
-  "status": "success",
-  "message": "Conversion complete",
-  "file_url": "/static/convert/output_[uuid].wav",
-  "file_size": 1234567
-}
-```
-
-### Speaker Management
-
-#### `GET /speakers`
-Get available speaker voices.
-
-**Response:**
-```json
-{
-  "speakers": ["Child", "Male", "Female"]
-}
-```
-
-#### `POST /model/load`
-Load or switch voice models.
-
-**Parameters:**
-- `model_name`: Model name (required)
-
-#### `GET /model/info`
-Get current model information.
-
-### Audio Processing
-
-#### `POST /audio/separate`
-Separate audio into vocals and instruments.
-
-**Parameters:**
-- `audio_file`: Audio file (required)
-
-**Response:**
-```json
-{
-  "vocals_url": "/static/separator/vocals_[uuid].wav",
-  "instruments_url": "/static/separator/instruments_[uuid].wav",
-  "sample_rate": 44100
-}
-```
-
-#### `POST /audio/merge`
-Merge vocals and instruments tracks.
-
-**Parameters:**
-- `vocals_path`: Path to vocals file (required)
-- `instruments_path`: Path to instruments file (required)
-- `vocals_volume`: Volume multiplier for vocals (default: 1.5)
-- `instruments_volume`: Volume multiplier for instruments (default: 1.0)
-- `output_filename`: Custom filename (optional)
-
-#### `POST /audio/merge-uploads`
-Merge uploaded vocals and instruments files.
-
-**Parameters:**
-- `vocals_file`: Vocals audio file (required)
-- `instruments_file`: Instruments audio file (required)
-- `vocals_volume`: Volume multiplier for vocals (default: 1.5)
-- `instruments_volume`: Volume multiplier for instruments (default: 1.0)
-
-### Complete Pipeline
-
-#### `POST /audio/process-all`
-Full audio processing pipeline: separate → convert → merge.
-
-**Parameters:**
-- `file`: Audio file (required)
-- All voice conversion parameters
-- `vocals_volume`: Volume multiplier for vocals (default: 1.5)
-- `instruments_volume`: Volume multiplier for instruments (default: 1.0)
-
-**Response:**
-```json
-{
-  "status": "success",
-  "message": "Audio processing pipeline completed successfully",
-  "original_audio": { "filename": "input.mp3" },
-  "separated_audio": {
-    "vocals_url": "/static/separator/vocals_[uuid].wav",
-    "instruments_url": "/static/separator/instruments_[uuid].wav"
-  },
-  "converted_audio": {
-    "vocals_url": "/static/converter/converted_[uuid].wav"
-  },
-  "final_output": {
-    "file_url": "/static/pipeline/processed_[uuid].wav",
-    "file_size": 1234567
-  },
-  "processing_info": {
-    "speaker_id": 1,
-    "key": 0,
-    "enhance": true,
-    "vocals_volume": 1.5,
-    "instruments_volume": 1.0
-  }
-}
-```
-
-### Utilities
-
-#### `GET /ping`
-Health check endpoint.
-
-**Response:**
-```json
-{
-  "status": "ok",
-  "message": "pong"
-}
+Joyce Kong - hui.kong.23@ucl.ac.uk
