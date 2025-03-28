@@ -63,37 +63,6 @@ cp .env.example .env
 python scripts/download_models.py
 ```
 
-## Installation - offline chatbot
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/llama-fastapi-backend.git
-cd llama-fastapi-backend
-```
-
-2. Build `llama.cpp` binary (assumes it's located at `build/bin/llama-cli`):
-
-```bash
-# Inside the llama.cpp directory
-mkdir -p build && cd build
-cmake ..
-make -j
-```
-
-3. Download your model (`.gguf` format) into `models/` directory:
-
-```bash
-mkdir -p models
-# Move your .gguf model file into the models/ directory
-```
-
-4. Run the API server:
-
-```bash
-python app.py
-```
-
 ## Usage - voice cloning
 
 ### Running the Server
