@@ -7,10 +7,9 @@ import numpy as np
 import soundfile as sf
 from pydantic import BaseModel
 import tempfile
-import aiofiles  # 添加这行
-import io  # 添加这行
-from app.services.ddsp_service import DDSPService
-from ..services.separator_service import AudioSeparatorService
+import aiofiles
+from services.ddsp_service import DDSPService
+from services.separator_service import AudioSeparatorService
 import logging
 from typing import Optional, Dict
 

@@ -1,60 +1,23 @@
-# FastAPI Framework & Dependencies
-fastapi[all]>=0.68.0,<1.0.0
-uvicorn[standard]>=0.15.0,<1.0.0
-pydantic>=1.8.2,<2.0.0
-python-multipart>=0.0.5
-aiofiles>=0.8.0
-starlette>=0.27.0
-
-# HTTP Clients & Networking
-aiohttp>=3.8.0,<4.0.0
-requests>=2.28.0,<3.0.0
-
-# Deep Learning & PyTorch
---find-links https://download.pytorch.org/whl/cu118
-torch==2.1.1+cu118
-torchaudio==2.1.1+cu118
-torchvision==0.16.1+cu118
-torchcrepe>=0.0.19
-numpy>=1.26.0,<2.0.0
-einops>=0.6.0,<1.0.0
-
-# Audio Processing
-scipy>=1.10.0,<2.0.0
-librosa>=0.10.0,<1.0.0
-soundfile>=0.12.0
-sounddevice>=0.4.6
-pyworld>=0.3.0tor
-praat-parselmouth>=0.4.3
-resampy>=0.4.2
-
-# ML Tools & Transformers
-scikit-learn>=1.0.2
-transformers>=4.30.0,<5.0.0
-tensorboardX
-
-# Audio Separation (Fixed Versions for Compatibility)
+aiofiles==24.1.0
 demucs==4.0.0
-antlr4-python3-runtime==4.8
-omegaconf>=2.0.6
-hydra-core>=1.0.7
-
-# Configuration & Environment
-python-dotenv>=0.19.0
-PyYAML>=6.0.0
-
-# Progress & Utilities
-tqdm>=4.65.0
-
-# Security
-python-jose[cryptography]>=3.3.0
-passlib[bcrypt]>=1.7.4
-
-# Optional Development Dependencies
-pytest>=7.0.0
-pytest-asyncio>=0.18.0
-black>=22.0.0
-flake8>=4.0.0
-
-# Compilation
-nuitka~=2.6.8
+einops==0.8.1
+fairseq==0.12.2
+fastapi==0.115.12
+gin_config==0.5.0
+librosa==0.10.2.post1
+local_attention==1.11.1
+logger==1.4
+matplotlib==3.10.1
+numpy==2.2.4
+pydantic==1.10.21
+pyworld==0.3.5
+PyYAML==6.0.2
+resampy==0.4.3
+scikit_learn==1.6.1
+scipy==1.15.2
+soundfile==0.13.1
+torchcrepe==0.0.23
+torchfcpe==0.0.4
+tqdm==4.67.1
+transformers==4.49.0
+uvicorn==0.34.0

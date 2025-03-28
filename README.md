@@ -30,15 +30,6 @@
 - FFmpeg
 - Anaconda or Miniconda
 
-## Requirements - offline chatbot
-
-- Python 3.8+
-- llama.cpp (compiled binary)
-- Mistral 7B model in `.gguf` format
-- FastAPI
-- Uvicorn
-
-
 ## Installation - voice cloning
 
 ### Method 1: Using Pre-compiled Executable (Windows Only)
@@ -61,7 +52,7 @@ cd jamboxx-infinite-backends
 conda create -n jamboxx python=3.10.12
 conda activate jamboxx
 
-# Install PyTorch with CUDA support
+# Install PyTorch with CUDA support(with your cuda version is avaiable)
 conda install pytorch==2.0.1 torchaudio==2.0.1 pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
 
@@ -76,42 +67,6 @@ cp .env.example .env
 # Edit .env with your configurations
 ```
 
-5. Download required models:
-```bash
-python scripts/download_models.py
-```
-
-## Installation - offline chatbot
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/llama-fastapi-backend.git
-cd llama-fastapi-backend
-```
-
-2. Build `llama.cpp` binary (assumes it's located at `build/bin/llama-cli`):
-
-```bash
-# Inside the llama.cpp directory
-mkdir -p build && cd build
-cmake ..
-make -j
-```
-
-3. Download your model (`.gguf` format) into `models/` directory:
-
-```bash
-mkdir -p models
-# Move your .gguf model file into the models/ directory
-```
-
-4. Run the API server:
-
-```bash
-python app.py
-```
-
 ## Usage - voice cloning
 
 ### Running the Server
@@ -122,20 +77,9 @@ cd dist\main.dist
 start.bat
 ```
 
-Development mode:
+Using python:
 ```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-Production mode:
-```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
-
-Using Docker:
-```bash
-docker build -t jamboxx-backend .
-docker run -p 8000:8000 jamboxx-backend
+python app/main.py
 ```
 
 ### Building from Source

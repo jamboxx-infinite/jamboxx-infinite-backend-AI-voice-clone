@@ -6,10 +6,10 @@ from types import SimpleNamespace
 from fastapi import FastAPI, UploadFile, HTTPException
 import tqdm
 import yaml
-from app.ddsp.core import upsample
-from app.ddsp.vocoder import F0_Extractor, Units_Encoder, Volume_Extractor
-from app.ddsp.vocoder import load_model
-from app.enhancer import Enhancer
+from ddsp.core import upsample
+from ddsp.vocoder import F0_Extractor, Units_Encoder, Volume_Extractor
+from ddsp.vocoder import load_model
+from enhancer.enhancer import Enhancer
 import torch
 import librosa
 import numpy as np
