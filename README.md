@@ -1,7 +1,6 @@
 ﻿# Jamboxx Infinite Backends
 
 #### Voice cloning - a FastAPI-based backend service for DDSP-SVC voice conversion and audio processing.
-#### Offline chatbot - this project provides a lightweight FastAPI wrapper around a [llama.cpp](https://github.com/ggerganov/llama.cpp)-based large language model (LLM) binary, enabling real-time streamed AI chat completions via HTTP.
 
 ## Features - voice cloning
 
@@ -12,15 +11,6 @@
 - Async processing
 - Docker support
 - Comprehensive error handling
-  
-## Features - offline chatbot
-
-- Simple REST API with `/chat/` endpoint for prompt-based inference
-- Streaming JSON responses using `StreamingResponse` for fast output delivery
-- Validates input with Pydantic
-- Built-in support for instruction-tuned Mistral 7B model (`mistral-7b-instruct-v0.2.Q4_K_M.gguf`)
-- Customizable token count and context size
-- Clean subprocess-based execution using `asyncio` for maximum performance
 
 ## Requirements - voice cloning 
 
@@ -66,7 +56,6 @@ pip install -r requirements.txt
 cp .env.example .env
 # Edit .env with your configurations
 ```
-
 ## Usage - voice cloning
 
 ### Running the Server
@@ -94,58 +83,7 @@ build.bat
 The compiled executable and required files will be available in the `dist/main.dist` directory.
 
 ### API Endpoints
-
-#### Health Check
-```
-GET /ping
-```
-
-#### Voice Conversion
-```
-POST /api/v1/voiceConvert
-```
-
-Request body:
-```json
-{
-    "audio_data": "base64_encoded_audio",
-    "speaker_id": "speaker1",
-    "pitch_shift": 0.0,
-    "sample_rate": 44100
-}
-```
-
-#### List Available Models
-```
-GET /api/v1/models
-```
-
-#### Update Model
-```
-POST /api/v1/updateModel
-```
-
-## Usage - offline chatbot
-
-Send a POST request to `http://127.0.0.1:8000/chat/` with the following JSON body:
-
-```json
-{
-  "prompt": "Explain what a black hole is."
-}
-```
-
-Response will stream the model's output in real-time as JSON content.
-
-Example using `curl`:
-
-```bash
-curl -X POST http://127.0.0.1:8000/chat/ \
-     -H "Content-Type: application/json" \
-     -d '{"prompt": "Tell me a story about a dragon."}'
-```
-
-## Development
+See [API documentations.md]
 
 ### Project Structure
 ```
@@ -168,33 +106,14 @@ jamboxx_infinite_backends/
 └── README.md
 ```
 
-## Building Notes - voice cloning
-
-- Python 3.10.12 is recommended for optimal compatibility
-- Compilation requires approximately 2GB of disk space
-- First startup may take longer than subsequent launches
-- Compiled version includes all necessary dependencies
-- Target system must have Visual C++ Redistributable 2019 or later installed
-- CUDA 11.8 is recommended for GPU acceleration
-
-## Building Notes - offline chatbot
-
-Ensure the following:
-
-- You’ve compiled `llama.cpp` using `cmake` and `make`
-- The binary is available at `build/bin/llama-cli`
-- The model is in `.gguf` format and placed in `models/` directory
-- Environment variable `DYLD_LIBRARY_PATH` is set (especially on macOS)
-
-
 ## Acknowledgments
 
-- DDSP-SVC project
+- [DDSP-SVC project](https://github.com/magenta/ddsp)
 - FastAPI framework
 - PyTorch community
 - [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) 
 - [Mistral AI](https://mistral.ai/)
-- 
+
 ## Contributor
-WesleyXu - wesley.xu.23@ucl.ac.uk
-Joyce Kong - hui.kong.23@ucl.ac.uk
+WesleyXu
+JoyceKong
