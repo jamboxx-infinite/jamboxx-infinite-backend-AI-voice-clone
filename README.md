@@ -224,28 +224,9 @@ jamboxx_infinite_backends/
 └── README.md
 ```
 
-## Building Notes - voice cloning
-
-- Python 3.10.12 is recommended for optimal compatibility
-- Compilation requires approximately 2GB of disk space
-- First startup may take longer than subsequent launches
-- Compiled version includes all necessary dependencies
-- Target system must have Visual C++ Redistributable 2019 or later installed
-- CUDA 11.8 is recommended for GPU acceleration
-
-## Building Notes - offline chatbot
-
-Ensure the following:
-
-- You’ve compiled `llama.cpp` using `cmake` and `make`
-- The binary is available at `build/bin/llama-cli`
-- The model is in `.gguf` format and placed in `models/` directory
-- Environment variable `DYLD_LIBRARY_PATH` is set (especially on macOS)
-
-
 ## Acknowledgments
 
-- DDSP-SVC project
+- [DDSP-SVC project](https://github.com/magenta/ddsp)
 - FastAPI framework
 - PyTorch community
 - [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) 
