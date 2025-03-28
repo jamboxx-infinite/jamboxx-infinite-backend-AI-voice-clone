@@ -12,15 +12,6 @@
 - Async processing
 - Docker support
 - Comprehensive error handling
-  
-## Features - offline chatbot
-
-- Simple REST API with `/chat/` endpoint for prompt-based inference
-- Streaming JSON responses using `StreamingResponse` for fast output delivery
-- Validates input with Pydantic
-- Built-in support for instruction-tuned Mistral 7B model (`mistral-7b-instruct-v0.2.Q4_K_M.gguf`)
-- Customizable token count and context size
-- Clean subprocess-based execution using `asyncio` for maximum performance
 
 ## Requirements - voice cloning 
 
@@ -29,15 +20,6 @@
 - CUDA-compatible GPU (recommended)
 - FFmpeg
 - Anaconda or Miniconda
-
-## Requirements - offline chatbot
-
-- Python 3.8+
-- llama.cpp (compiled binary)
-- Mistral 7B model in `.gguf` format
-- FastAPI
-- Uvicorn
-
 
 ## Installation - voice cloning
 
