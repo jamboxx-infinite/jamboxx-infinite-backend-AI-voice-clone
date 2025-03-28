@@ -132,4 +132,5 @@ jamboxx_infinite_backends/
 - [Mistral AI](https://mistral.ai/)
 
 ## Contributor
-WesleyXu - wesley.xu.23@ucl.ac.uk
+WesleyXu
+JoyceKong
