@@ -132,58 +132,7 @@ build.bat
 The compiled executable and required files will be available in the `dist/main.dist` directory.
 
 ### API Endpoints
-
-#### Health Check
-```
-GET /ping
-```
-
-#### Voice Conversion
-```
-POST /api/v1/voiceConvert
-```
-
-Request body:
-```json
-{
-    "audio_data": "base64_encoded_audio",
-    "speaker_id": "speaker1",
-    "pitch_shift": 0.0,
-    "sample_rate": 44100
-}
-```
-
-#### List Available Models
-```
-GET /api/v1/models
-```
-
-#### Update Model
-```
-POST /api/v1/updateModel
-```
-
-## Usage - offline chatbot
-
-Send a POST request to `http://127.0.0.1:8000/chat/` with the following JSON body:
-
-```json
-{
-  "prompt": "Explain what a black hole is."
-}
-```
-
-Response will stream the model's output in real-time as JSON content.
-
-Example using `curl`:
-
-```bash
-curl -X POST http://127.0.0.1:8000/chat/ \
-     -H "Content-Type: application/json" \
-     -d '{"prompt": "Tell me a story about a dragon."}'
-```
-
-## Development
+See [API documentations.md]
 
 ### Project Structure
 ```
