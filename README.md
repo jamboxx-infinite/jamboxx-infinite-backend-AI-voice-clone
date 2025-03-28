@@ -51,11 +51,6 @@ conda install pytorch==2.0.1 torchaudio==2.0.1 pytorch-cuda=11.8 -c pytorch -c n
 pip install -r requirements.txt
 ```
 
-4. Set up environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your configurations
-```
 ## Usage - voice cloning
 
 ### Running the Server
