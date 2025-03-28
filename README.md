@@ -130,7 +130,6 @@ jamboxx_infinite_backends/
 - PyTorch community
 - [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) 
 - [Mistral AI](https://mistral.ai/)
-- 
+
 ## Contributor
 WesleyXu - wesley.xu.23@ucl.ac.uk
-Joyce Kong - hui.kong.23@ucl.ac.uk
