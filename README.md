@@ -1,7 +1,6 @@
 ﻿# Jamboxx Infinite Backends
 
 #### Voice cloning - a FastAPI-based backend service for DDSP-SVC voice conversion and audio processing.
-#### Offline chatbot - this project provides a lightweight FastAPI wrapper around a [llama.cpp](https://github.com/ggerganov/llama.cpp)-based large language model (LLM) binary, enabling real-time streamed AI chat completions via HTTP.
 
 ## Features - voice cloning
 
