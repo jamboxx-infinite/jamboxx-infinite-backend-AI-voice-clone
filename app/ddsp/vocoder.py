@@ -9,7 +9,7 @@ import torchcrepe
 import resampy
 from transformers import HubertModel, Wav2Vec2FeatureExtractor
 from fairseq import checkpoint_utils
-from app.encoder.hubert.model import HubertSoft
+from encoder.hubert.model import HubertSoft
 from torch.nn.modules.utils import consume_prefix_in_state_dict_if_present
 from torchaudio.transforms import Resample
 from .unit2control import Unit2Control
@@ -33,7 +33,7 @@ class F0_Extractor:
             self.resample_kernel = CREPE_RESAMPLE_KERNEL[key_str]
         if f0_extractor == 'rmvpe':
             if 'rmvpe' not in F0_KERNEL :
-                from app.encoder.rmvpe import RMVPE
+                from encoder.rmvpe import RMVPE
                 F0_KERNEL['rmvpe'] = RMVPE('pretrain/rmvpe/model.pt', hop_length=160)
             self.rmvpe = F0_KERNEL['rmvpe']
         if f0_extractor == 'fcpe':

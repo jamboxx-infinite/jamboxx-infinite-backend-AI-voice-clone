@@ -42,7 +42,7 @@ cd jamboxx-infinite-backends
 conda create -n jamboxx python=3.10.12
 conda activate jamboxx
 
-# Install PyTorch with CUDA support
+# Install PyTorch with CUDA support(with your cuda version is avaiable)
 conda install pytorch==2.0.1 torchaudio==2.0.1 pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
 
@@ -56,12 +56,6 @@ pip install -r requirements.txt
 cp .env.example .env
 # Edit .env with your configurations
 ```
-
-5. Download required models:
-```bash
-python scripts/download_models.py
-```
-
 ## Usage - voice cloning
 
 ### Running the Server
@@ -72,20 +66,9 @@ cd dist\main.dist
 start.bat
 ```
 
-Development mode:
+Using python:
 ```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-Production mode:
-```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
-
-Using Docker:
-```bash
-docker build -t jamboxx-backend .
-docker run -p 8000:8000 jamboxx-backend
+python app/main.py
 ```
 
 ### Building from Source
